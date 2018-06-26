@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>计算属性、方法、侦听器</title>
+    <script src="../common/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- {{fullName()}} 方法 -->
+        {{fullName}}
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                fName:'李',
+                lName:'雷',
+                fullName:'李雷'
+            },
+            /**
+             * Vue 提供了一种更通用的方式来观察和响应 Vue 实例上的数据变动：侦听属性。
+             * 当你有一些数据需要随着其它数据变动而变动时，你很容易滥用 watch——特别是
+             * 如果你之前使用过 AngularJS。然而，通常更好的做法是使用计算属性而不是命
+             * 令式的 watch 回调
+             **/
+            watch:{
+                fName:function(){
+                    this.fullName = this.fName + this.fullName.substring(1);
+                },
+                lName:function(){
+                    this.fullName = this.fullName.substring(0,1) + this.lName;
+                }
+            }
+            //方法
+            // methods:{
+            //     fullName:function(){
+            //         return this.fName + this.lName;
+            //     }
+            // }
+            //计算属性 有缓存 涉及的值不变只会执行一次
+            /**
+             * 相比较函数的方式返回，计算属性是基于它们的依赖进行缓存的。计算属性只有在它的相关依赖发生改变时才会重新求值。
+             * 这就意味着只要 依赖的data值 还没有发生改变，多次访问计算属性会立即返回
+             * 之前的计算结果，而不必再次执行函数。
+             **/
+            // computed: {
+            //     fullName:function(){
+            //         return this.fName + this.lName;
+            //     }
+            // }
+        })
+    </script>
+</body>
+</html>

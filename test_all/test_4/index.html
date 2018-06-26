@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>模板语法</title>
+    <script src="../common/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div>{{name + '999'}}</div>
+        <div v-text="name + '999'"></div>
+        <div v-html="name + '999'"></div>
+    </div>
+    <script>
+        //v- 后面的不是字符串而是JS表达式
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                name:'<h3>dell</h3>'
+            }
+        })
+    </script>
+</body>
+</html>

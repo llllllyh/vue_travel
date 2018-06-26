@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue中的样式绑定</title>
+    <script src="../common/vue.js"></script>
+    <style>
+        .activated {
+            color: blue
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div @click="handleClick" :class="{activated : isActivated}">Hello world</div>
+    </div>
+    <div id="app2">
+        <div @click="handleClick" :class="[activated]">Hello world</div>
+    </div>
+    <div id="app3">
+        <div @click="handleClick" :style="styleObj">Hello world</div>
+    </div>
+    <div id="app4">
+        <div @click="handleClick" :style="[styleObj]">Hello world</div>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                isActivated: false
+            },
+            methods: {
+                handleClick: function () {
+                    this.isActivated = !this.isActivated;
+                }
+            }
+        })
+        var vm2 = new Vue({
+            el: '#app2',
+            data: {
+                activated: ''
+            },
+            methods: {
+                handleClick: function () {
+                    this.activated = this.activated ? '' : 'activated';
+                }
+            }
+        })
+        var vm3 = new Vue({
+            el: '#app3',
+            data: {
+                styleObj: {
+                    color: 'black'
+                }
+            },
+            methods: {
+                handleClick: function () {
+                    this.styleObj.color = this.styleObj.color === 'yellow' ? 'black' : 'yellow';
+                }
+            }
+        })
+        var vm4 = new Vue({
+            el: '#app4',
+            data: {
+                styleObj: {
+                    color: 'black'
+                }
+            },
+            methods: {
+                handleClick: function () {
+                    this.styleObj.color = this.styleObj.color === 'yellow' ? 'black' : 'yellow';
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
