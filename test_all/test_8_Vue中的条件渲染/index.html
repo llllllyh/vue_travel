@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中的条件渲染</title>
+    <script src="../common/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div v-if="isShow">{{hello}}</div>
+        <div v-else>Bye</div>
+        <div v-show="isShow">{{hello}}</div>
+    </div>
+    <div id="app2">
+        <div v-if="text_letter === 'a'">this is a</div>
+        <div v-else-if="text_letter === 'b'">this is b</div>
+        <div v-else>not all</div>
+    </div>
+    <div id="app3">
+        <div v-if="show">用户名：<input type="text" key="username"></div>
+        <div v-else>邮箱：<input type="text"  key="email"></div>
+    </div>
+    <script>
+        //v-show 为false时 会有display:none的属性 但v-if直接不渲染该元素 
+        // v-if 和 v-else 中间不能用其它元素阻隔
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                isShow: false,
+                hello: 'Hello~',
+            }
+        })
+        var vm2 = new Vue({
+            el: '#app2',
+            data: {
+                text_letter: 'a',
+            }
+        })
+        //Vue机制会复用页面上的dom元素，为了区别 加上 key 虚拟dom算法
+        var vm3 = new Vue({
+            el: '#app3',
+            data: {
+                show:false,
+            }
+        })
+    </script>
+</body>
+
+</html>

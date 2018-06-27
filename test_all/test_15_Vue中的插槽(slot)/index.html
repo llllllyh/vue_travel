@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中的插槽(slot)</title>
+    <script src="../common/vue.js"></script>
+</head>
+<body>  
+    <div id="app">
+        <body-content>
+            <div class="header" slot="header">header</div>
+            <div class="footer" slot="footer">footer</div>
+        </body-content>
+    </div>
+    <script>
+        /**
+            <slot>可以放默认的元素或者值，父组件不传时显示</slot>
+        **/
+        Vue.component('body-content',{
+            template:"<div><slot name='header'>默认内容</slot><p>hello</p><slot name='footer'>默认内容</slot></div>"
+        })
+        var vm = new Vue({
+            el:'#app'
+        })
+    </script>
+</body>
+</html>

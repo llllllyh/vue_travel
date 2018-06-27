@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中的css原理</title>
+    <script src="../common/vue.js"></script>
+    <style>
+        /* 
+            隐藏-》显示：vue中被transition包裹的元素会自动增加(第一帧)fade(前缀)-enter(第二帧移除) fade(前缀)-enter-active(执行完后移除) 类名 
+            fade(前缀)-enter-active 监听 fade(前缀)-enter的变化
+            显示-》隐藏：vue中被transition包裹的元素会自动增加 前缀-leave(效果不变) 和 前缀-leave-active(监听) 第二帧增加 前缀-leave-to(变化)
+        */
+        .fade-enter{
+            opacity: 0;
+        }
+        .fade-enter-active{
+            transition: opacity 3s;
+        }
+        .fade-leave-to{
+            opacity: 0;
+        }
+        .fade-leave-active{
+            transition: opacity 3s;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- name = fade 类名前缀是fade 不写默认是v -->
+        <transition name="fade">
+            <div v-if="show">Heroooooo</div>
+        </transition>
+        <button @click="handleClick">切换</button>
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                show:false
+            },
+            methods:{
+                handleClick:function(){
+                    this.show = !this.show;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

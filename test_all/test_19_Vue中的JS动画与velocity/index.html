@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中的JS动画与velocity.js</title>
+    <script src="../common/vue.js"></script>
+    <script src="./velocity.js"></script>
+    <!-- http://www.mrfront.com/docs/velocity.js/index.html 中文文档 -->
+</head>
+
+<body>
+    <div id="app">
+        <transition name="fade" @before-enter="handleBeforeEnter" @enter="handleEnter" @after-enter="handleAfterEnter">
+            <div v-show="show">Heool</div>
+        </transition>
+        <button @click="handleClick">toggle</button>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                show: true
+            },
+            methods: {
+                handleClick: function () {
+                    this.show = !this.show;
+                },
+                handleBeforeEnter: function (el) {
+                    // el.style.color = 'blue';
+                    el.style.opacity = 0;
+                },
+                handleEnter: function (el, done) {
+                    //done回调
+                    // setTimeout(() => {
+                    //     el.style.color = 'black';
+                    // }, 2000);
+                    // setTimeout(() => {
+                    //     done(); //动画结束
+                    // }, 3000)
+                    //执行完动画complete后面的会被执行
+                    Velocity(el,{opacity:1},{duration:1000,complete:done}); 
+                },
+                handleAfterEnter:function(el){
+                    // el.style.color = 'pink';
+                    alert("动画结束")
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中的列表渲染</title>
+    <script src="../common/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <template v-for="(item,idx) of list" :key="item.id">
+            {{item.text}} -- {{idx}}
+        </template>
+    </div>
+    <div id="app2">
+        <template v-for="(item,key,idx) of userInfo">
+            {{item}} -- {{key}} -- {{idx}}
+        </template>
+    </div>
+    <script>
+        //使用下标的形式添加数组并不会造成页面的重新渲染
+        //有效方法：push pop shift unshift splice sort reverse 和改变引用 
+        // 以及使用 Vue.set(vm.list,index,value) 或  vm.$set(vm.list,index,value)
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                list: [
+                    { id: '010', text: 'hello' }, { id: '011', text: 'world' }, { id: '012', text: 'cool' }
+                ]
+            }
+        })
+        //循环对象
+        /**
+            userInfo.address = '北京' 这么写无法重新渲染页面
+            有效：修改引用 或 Vue.set(vm2.userInfo,'address','beijing') 或 vm2.$set(vm2.userInfo,'address','beijing')
+        **/
+        var vm2 = new Vue({
+            el: '#app2',
+            data: {
+                userInfo: {
+                    name: 'nike',
+                    age: '18',
+                    gender: 'male'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

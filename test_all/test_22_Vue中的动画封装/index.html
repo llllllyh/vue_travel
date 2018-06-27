@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中的动画封装</title>
+    <script src="../common/vue.js"></script>
+    <style>
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+        }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: opacity 3s;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <fade :show="show">
+            <div>Heool</div>
+        </fade>
+        <button @click="handleAdd">add</button>
+    </div>
+    <script>
+        //推荐使用velocity将动画封装在模板里面
+        Vue.component('fade', {
+            props:['show'],
+            template: `<transition>
+                            <slot v-if="show"></slot>
+                        </transition>`
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                show: true
+            },
+            methods: {
+                handleAdd: function () {
+                    this.show = !this.show;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

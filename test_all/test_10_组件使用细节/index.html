@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件使用细节</title>
+    <script src="../common/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <table>
+            <tbody>
+                <tr is="row"></tr>
+                <tr></tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="root">
+        <!-- <div ref="hello" @click="handleClick">666666666666666</div> -->
+        <counter ref="one" @change="handleChange"></counter>
+        <counter ref="two" @change="handleChange"></counter>
+        <div>{{total}}</div>
+    </div>
+    <script>
+
+
+        //ref
+        //ref指定在template时 this.$refs.name 拿的是vueComponent 子组件的引用
+        //ref指定在元素  拿的是元素dom
+        Vue.component('counter', {
+            data: function () {
+                return {
+                    number: 0
+                }
+            },
+            template: "<div @click='addNum'>{{number}}</div>",
+            methods: {
+                addNum: function () {
+                    this.number++;
+                    this.$emit('change')
+                }
+            }
+        })
+
+
+        var rot = new Vue({
+            el: '#root',
+            data:{
+                total:0
+            },
+            methods: {
+                handleClick: function () {
+                    console.log(this.$refs.hello.innerHTML)
+                },
+                handleChange:function(){
+                    this.total = this.$refs.one.number + this.$refs.two.number
+                }
+            }
+        })
+
+
+
+        //子组件的data必须是函数 避免出现公用同个数据
+        Vue.component('row', {
+            data: function () {
+                return {
+                    content: 'this is row'
+                }
+            },
+            template: "<tr><td>{{content}}</td></tr>"
+        })
+
+        var vm = new Vue({
+            el: '#app'
+        })
+
+
+        //is用于动态组件且基于 DOM 内模板的限制来工作。
+        // Vue.component('row',{
+        //     template:"<tr><td>row</td></tr>"
+        // })
+
+        // var vm = new Vue({
+        //     el:'#app'
+        // })
+    </script>
+</body>
+
+</html>
