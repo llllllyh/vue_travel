@@ -7,23 +7,30 @@
       <span class="iconfont">&#xe632;</span>
       输入城市/景点/游玩主题
     </div>
-    <div class="header-right">
-      城市
-      <span class="iconfont arrow-icon">&#xe64a;</span>
-    </div>
+    <router-link to="/city">
+      <div class="header-right">
+        {{this.city}}
+        <span class="iconfont arrow-icon">&#xe64a;</span>
+      </div>
+    </router-link >
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
-  name: 'HomeHeader'
+  name: 'HomeHeader',
+  computed: {
+    ...mapState(['city'])
+  }
 }
 // scoped限制样式只在当前组件有效 stylus样式写法插件
 </script>
 <style lang="stylus" scoped>
   @import '~styles/varibles.styl'
+  @import '~styles/mixins.styl'
   .header
     display:flex
-    line-height:.86rem
+    line-height:$headerHeight
     background:$bgColor
     color:#fff
     .header-left
@@ -43,9 +50,12 @@ export default {
       border-radius:.1rem
       padding-left:.2rem
     .header-right
-      width:1.24rem
+      min-width:1.04rem
+      padding:0 .1rem
       float:right
       text-align:center
+      color:#fff
+      ellipsis()
       .arrow-icon
         font-size:.24rem
         margin-left: -.04rem
